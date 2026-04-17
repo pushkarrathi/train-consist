@@ -5,41 +5,30 @@ public static void main(String[] args) {
 
 	System.out.println("=== Train Consist Management App ===");
 
-	// UC19: Binary Search for Bogie ID
+	// UC20: Exception Handling During Search
 
-	String[] bogieIDs = {"BG309", "BG101", "BG550", "BG205", "BG412"};
+	String[] bogieIDs = {}; // try with empty and non-empty cases
 
-	String searchKey = "BG205"; // change to test
+	String searchKey = "BG101";
 
-	// Step 1: Sort the array (precondition for binary search)
-	Arrays.sort(bogieIDs);
+	// Fail-fast validation
+	if (bogieIDs.length == 0) {
+		throw new IllegalStateException("Cannot perform search: Train has no bogies.");
+	}
 
-	System.out.println("\nSorted Bogie IDs:");
-	System.out.println(Arrays.toString(bogieIDs));
-
-	int low = 0;
-	int high = bogieIDs.length - 1;
+	// Linear Search (can also reuse binary search)
 	boolean found = false;
 
-	// Step 2: Binary Search
-	while (low <= high) {
-		int mid = (low + high) / 2;
-
-		int comparison = bogieIDs[mid].compareTo(searchKey);
-
-		if (comparison == 0) {
+	for (String id : bogieIDs) {
+		if (id.equals(searchKey)) {
 			found = true;
 			break;
-		} else if (comparison < 0) {
-			low = mid + 1; // search right half
-		} else {
-			high = mid - 1; // search left half
 		}
 	}
 
 	// Step 3: Output result
 	if (found) {
-		System.out.println("\nBogie ID " + searchKey + " FOUND using Binary Search.");
+		System.out.println("\nBogie ID " + searchKey + " FOUND.");
 	} else {
 		System.out.println("\nBogie ID " + searchKey + " NOT FOUND.");
 	}

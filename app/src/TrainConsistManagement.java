@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -34,19 +35,39 @@ public static void main(String[] args) {
 		System.out.println("'Sleeper' bogie does NOT exist in the train.");
 	}
 
-	// UC3: Track Unique Bogie IDs using HashSet
+	// UC3: Unique Bogie IDs using HashSet
 	System.out.println("\nTracking unique bogie IDs...");
-
 	Set<String> bogieIDs = new HashSet<>();
-
-	// Adding IDs (with duplicates)
 	bogieIDs.add("BG101");
 	bogieIDs.add("BG102");
 	bogieIDs.add("BG103");
 	bogieIDs.add("BG101"); // duplicate
 	bogieIDs.add("BG102"); // duplicate
-
-	// Display unique IDs
 	System.out.println("Unique Bogie IDs: " + bogieIDs);
+
+	// UC4: Maintain ordered train consist using LinkedList
+	System.out.println("\nMaintaining ordered train consist...");
+
+	LinkedList<String> orderedConsist = new LinkedList<>();
+
+	// Add bogies
+	orderedConsist.add("Engine");
+	orderedConsist.add("Sleeper");
+	orderedConsist.add("AC");
+	orderedConsist.add("Cargo");
+	orderedConsist.add("Guard");
+
+	System.out.println("Initial consist: " + orderedConsist);
+
+	// Insert Pantry Car at position 2
+	orderedConsist.add(2, "Pantry Car");
+	System.out.println("After inserting Pantry Car: " + orderedConsist);
+
+	// Remove first and last bogie
+	orderedConsist.removeFirst();
+	orderedConsist.removeLast();
+
+	// Final consist
+	System.out.println("Final ordered train consist: " + orderedConsist);
 }
 }

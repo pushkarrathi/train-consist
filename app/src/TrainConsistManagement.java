@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -47,27 +48,36 @@ public static void main(String[] args) {
 
 	// UC4: Maintain ordered train consist using LinkedList
 	System.out.println("\nMaintaining ordered train consist...");
-
 	LinkedList<String> orderedConsist = new LinkedList<>();
-
-	// Add bogies
 	orderedConsist.add("Engine");
 	orderedConsist.add("Sleeper");
 	orderedConsist.add("AC");
 	orderedConsist.add("Cargo");
 	orderedConsist.add("Guard");
-
 	System.out.println("Initial consist: " + orderedConsist);
 
-	// Insert Pantry Car at position 2
 	orderedConsist.add(2, "Pantry Car");
 	System.out.println("After inserting Pantry Car: " + orderedConsist);
 
-	// Remove first and last bogie
 	orderedConsist.removeFirst();
 	orderedConsist.removeLast();
-
-	// Final consist
 	System.out.println("Final ordered train consist: " + orderedConsist);
+
+	// UC5: Preserve insertion order with uniqueness using LinkedHashSet
+	System.out.println("\nMaintaining train formation using LinkedHashSet...");
+
+	LinkedHashSet<String> trainFormation = new LinkedHashSet<>();
+
+	// Add bogies
+	trainFormation.add("Engine");
+	trainFormation.add("Sleeper");
+	trainFormation.add("Cargo");
+	trainFormation.add("Guard");
+
+	// Attempt duplicate insertion
+	trainFormation.add("Sleeper"); // duplicate ignored
+
+	// Display final formation
+	System.out.println("Final train formation (no duplicates, ordered): " + trainFormation);
 }
 }

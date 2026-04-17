@@ -73,21 +73,27 @@ public static void main(String[] args) {
 	bogieList.add(new Bogie("Sleeper", 72));
 	bogieList.add(new Bogie("AC Chair", 54));
 	bogieList.add(new Bogie("First Class", 24));
+	bogieList.add(new Bogie("Sleeper", 70)); // duplicate type for grouping
 
 	bogieList.sort(Comparator.comparingInt(b -> b.capacity));
 
-	// UC8: Filter using Streams
-	System.out.println("\nFiltering bogies with capacity > 60...");
-
-	List<Bogie> filteredBogies = bogieList
-		.stream()
+	// UC8
+	List<Bogie> filteredBogies = bogieList.stream()
 		.filter(b -> b.capacity > 60)
 		.collect(Collectors.toList());
 
-	// Display filtered bogies
-	System.out.println("Filtered Bogies:");
-	for (Bogie b : filteredBogies) {
-		System.out.println(b);
+	// UC9: Group Bogies by Type
+	System.out.println("\nGrouping bogies by type...");
+
+	Map<String, List<Bogie>> groupedBogies = bogieList.stream()
+		.collect(Collectors.groupingBy(b -> b.name));
+
+	// Display grouped bogies
+	for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
+		System.out.println("\nType: " + entry.getKey());
+		for (Bogie b : entry.getValue()) {
+			System.out.println("  " + b);
+		}
 	}
 
 	// Verify original list unchanged

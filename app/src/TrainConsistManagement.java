@@ -1,22 +1,30 @@
 package org.example;
 
-import java.util.Arrays;
-
 public class TrainConsistManagement {
 public static void main(String[] args) {
 
 	System.out.println("=== Train Consist Management App ===");
 
-	// UC17: Sort Bogie Names using Arrays.sort()
-	String[] bogieNames = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
+	// UC18: Linear Search for Bogie ID
+	String[] bogieIDs = {"BG101", "BG205", "BG309", "BG412", "BG550"};
 
-	System.out.println("\nOriginal Bogie Names:");
-	System.out.println(Arrays.toString(bogieNames));
+	String searchKey = "BG309"; // change this value to test
 
-	// Built-in sorting
-	Arrays.sort(bogieNames);
+	boolean found = false;
 
-	System.out.println("\nSorted Bogie Names (Alphabetical):");
-	System.out.println(Arrays.toString(bogieNames));
+	// Linear Search
+	for (int i = 0; i < bogieIDs.length; i++) {
+		if (bogieIDs[i].equals(searchKey)) {
+			found = true;
+			break; // early termination
+		}
+	}
+
+	// Output result
+	if (found) {
+		System.out.println("\nBogie ID " + searchKey + " FOUND in the train.");
+	} else {
+		System.out.println("\nBogie ID " + searchKey + " NOT FOUND in the train.");
+	}
 }
 }

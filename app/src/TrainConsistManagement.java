@@ -73,7 +73,7 @@ public static void main(String[] args) {
 	bogieList.add(new Bogie("Sleeper", 72));
 	bogieList.add(new Bogie("AC Chair", 54));
 	bogieList.add(new Bogie("First Class", 24));
-	bogieList.add(new Bogie("Sleeper", 70)); // duplicate type for grouping
+	bogieList.add(new Bogie("Sleeper", 70));
 
 	bogieList.sort(Comparator.comparingInt(b -> b.capacity));
 
@@ -82,19 +82,18 @@ public static void main(String[] args) {
 		.filter(b -> b.capacity > 60)
 		.collect(Collectors.toList());
 
-	// UC9: Group Bogies by Type
-	System.out.println("\nGrouping bogies by type...");
-
+	// UC9
 	Map<String, List<Bogie>> groupedBogies = bogieList.stream()
 		.collect(Collectors.groupingBy(b -> b.name));
 
-	// Display grouped bogies
-	for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
-		System.out.println("\nType: " + entry.getKey());
-		for (Bogie b : entry.getValue()) {
-			System.out.println("  " + b);
-		}
-	}
+	// UC10: Total Seating Capacity using reduce
+	System.out.println("\nCalculating total seating capacity...");
+
+	int totalCapacity = bogieList.stream()
+		.map(b -> b.capacity)
+		.reduce(0, Integer::sum);
+
+	System.out.println("Total Seating Capacity of Train: " + totalCapacity);
 
 	// Verify original list unchanged
 	System.out.println("\nOriginal Bogie List:");

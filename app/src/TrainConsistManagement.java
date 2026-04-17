@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.regex.*;
 import java.util.stream.Collectors;
 
-// Bogie class
+// Passenger Bogie class
 class Bogie {
 String name;
 int capacity;
@@ -17,6 +17,22 @@ Bogie(String name, int capacity) {
 @Override
 public String toString() {
 	return name + " (Capacity: " + capacity + ")";
+}
+}
+
+// Goods Bogie class for UC12
+class GoodsBogie {
+String type;   // Cylindrical, Rectangular, etc.
+String cargo;  // Petroleum, Coal, Grain
+
+GoodsBogie(String type, String cargo) {
+	this.type = type;
+	this.cargo = cargo;
+}
+
+@Override
+public String toString() {
+	return type + " -> " + cargo;
 }
 }
 
@@ -75,7 +91,6 @@ public static void main(String[] args) {
 	bogieList.add(new Bogie("AC Chair", 54));
 	bogieList.add(new Bogie("First Class", 24));
 	bogieList.add(new Bogie("Sleeper", 70));
-
 	bogieList.sort(Comparator.comparingInt(b -> b.capacity));
 
 	// UC8
@@ -94,31 +109,36 @@ public static void main(String[] args) {
 
 	System.out.println("\nTotal Seating Capacity: " + totalCapacity);
 
-	// UC11: Regex Validation
-	System.out.println("\nValidating Train ID and Cargo Code...");
-
-	String trainID = "TRN-1234";   // change to test
-	String cargoCode = "PET-AB";   // change to test
-
-	// Define patterns
+	// UC11
 	Pattern trainPattern = Pattern.compile("TRN-\\d{4}");
 	Pattern cargoPattern = Pattern.compile("PET-[A-Z]{2}");
 
-	// Create matchers
-	Matcher trainMatcher = trainPattern.matcher(trainID);
-	Matcher cargoMatcher = cargoPattern.matcher(cargoCode);
+	String trainID = "TRN-1234";
+	String cargoCode = "PET-AB";
 
-	// Validate
-	if (trainMatcher.matches()) {
-		System.out.println("Train ID is VALID: " + trainID);
-	} else {
-		System.out.println("Train ID is INVALID: " + trainID);
-	}
+	System.out.println("\nTrain ID Valid: " + trainPattern.matcher(trainID).matches());
+	System.out.println("Cargo Code Valid: " + cargoPattern.matcher(cargoCode).matches());
 
-	if (cargoMatcher.matches()) {
-		System.out.println("Cargo Code is VALID: " + cargoCode);
+	// UC12: Safety Compliance Check
+	System.out.println("\nChecking safety compliance for goods bogies...");
+
+	List<GoodsBogie> goodsList = new ArrayList<>();
+
+	goodsList.add(new GoodsBogie("Cylindrical", "Petroleum"));
+	goodsList.add(new GoodsBogie("Rectangular", "Coal"));
+	goodsList.add(new GoodsBogie("Cylindrical", "Petroleum"));
+	// Try invalid case: new GoodsBogie("Cylindrical", "Coal")
+
+	boolean isSafe = goodsList.stream()
+		.allMatch(b ->
+			!b.type.equalsIgnoreCase("Cylindrical") ||
+				b.cargo.equalsIgnoreCase("Petroleum")
+		);
+
+	if (isSafe) {
+		System.out.println("Train is SAFETY COMPLIANT.");
 	} else {
-		System.out.println("Cargo Code is INVALID: " + cargoCode);
+		System.out.println("Train is NOT SAFE!");
 	}
 }
 }

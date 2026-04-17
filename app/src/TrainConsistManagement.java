@@ -1,8 +1,9 @@
 package org.example;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-// Bogie class for UC7
+// Bogie class
 class Bogie {
 String name;
 int capacity;
@@ -67,20 +68,30 @@ public static void main(String[] args) {
 	bogieCapacity.put("AC Chair", 54);
 	bogieCapacity.put("First Class", 24);
 
-	// UC7: Sort Bogies by Capacity
-	System.out.println("\nSorting bogies by capacity...");
-
+	// UC7
 	List<Bogie> bogieList = new ArrayList<>();
-
 	bogieList.add(new Bogie("Sleeper", 72));
 	bogieList.add(new Bogie("AC Chair", 54));
 	bogieList.add(new Bogie("First Class", 24));
 
-	// Sort using Comparator (ascending order)
 	bogieList.sort(Comparator.comparingInt(b -> b.capacity));
 
-	// Display sorted bogies
-	System.out.println("Bogies sorted by capacity:");
+	// UC8: Filter using Streams
+	System.out.println("\nFiltering bogies with capacity > 60...");
+
+	List<Bogie> filteredBogies = bogieList
+		.stream()
+		.filter(b -> b.capacity > 60)
+		.collect(Collectors.toList());
+
+	// Display filtered bogies
+	System.out.println("Filtered Bogies:");
+	for (Bogie b : filteredBogies) {
+		System.out.println(b);
+	}
+
+	// Verify original list unchanged
+	System.out.println("\nOriginal Bogie List:");
 	for (Bogie b : bogieList) {
 		System.out.println(b);
 	}
